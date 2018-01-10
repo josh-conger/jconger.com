@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 
 <head>
-<title>JConger</title>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
+	<title>JConger</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
 
-<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
-<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/main.css" />
 
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+	<script src="//connect.soundcloud.com/sdk/sdk-3.3.0.js"></script>
+	<script src="//w.soundcloud.com/player/api.js"></script>
+
+	<script src="js/app.js"></script>
 
 </head>
 
 <body>
 
-	<div class="container">
+	<div class="container" ng-controller="controller">
 		<div class="row text-center">
 			<div class="col">This site is owned and operated by Jacob and Josh Conger.</div>
 		</div>
+		<div class="row">
+			<!-- <iframe width="400" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/418174355&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_teaser=false"> -->
+			</iframe>
+		</div>
 	</div>
-	
+
 </body>
 
 </html>
-

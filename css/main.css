@@ -1,11 +1,42 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
 body {
 	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	margin-bottom: 50px;
 }
-.container {
-	margin-top: 25vh;
+.version {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px 10px;
+	color: rgba(0, 0, 0, 0.2);
+}
+.text-row {
+	margin-top: 20vh;
+	font-size: 16px;
+}
+.sc-row {
+	margin-top: 15vh;
 }
 .fa {
 	cursor: pointer;
+	font-size: 26px;
+	padding: 15px 30px;
+	vertical-align: middle;
+}
+.fa-play, 
+.fa-pause {
+	font-size: 32px;
+}
+.track-title {
+	margin-top: 10px;
+	font-weight: bold;
+}
+.track-artist {
+	margin-top: 5px;
 }
 
 

@@ -2,88 +2,91 @@ var app = angular.module('app', []);
 
 app.controller('controller', function ($scope) {
 
-    var index = 0;
-    var currentSong = 0;
-    var song = {
-        title: [],
-        artist: [],
-        id: [],
-        duration: []
-    };
-    var scPlayer = {};
-
     init();
     function init() {
-        scInit();
-        scStream();
+        soundCloudStreamerInit();
     }
 
-    function scInit() {
-        SC.initialize({
-            client_id: 'c2Hm1wGeqsWTHQ07QmQqFJqGsw2j1nB9'
+    function soundCloudStreamerInit() {
+        var scClientId = 'c2Hm1wGeqsWTHQ07QmQqFJqGsw2j1nB9';
+        var scPlaylistId = '418174355';
+        var scTracks = [];
+        var scTrackIndex = 0;
+        var scTrackIndexesPlayed = [];
+        var scTrackIndexesNotPlayed = [];
+        var scPlayer = {};
+
+        SC.initialize({ client_id: scClientId });
+
+        SC.get('/playlists/' + scPlaylistId).then(function (playlist) {
+            scTracks = shuffleArray(playlist.tracks);
+            streamTrack(false);
         });
-    }
 
-    $scope.scPlayPause = function() {
-        if (scPlayer.isPlaying() === true) {
-            scPlayer.pause();
-            $scope.scIsPlaying = false;
-        } else {
-            scPlayer.play();
-            $scope.scIsPlaying = true;
-        }
-    }
-
-    function scStream() {
-        SC.get('/playlists/418174355').then(function (playlist) {
-            playlist.tracks.forEach(function (track) {
-                song.id[index] = track.id;
-                console.log(track.title);
-                song.title[index] = track.title;
-                song.artist[index] = track.user.username;
-                song.duration[index] = track.duration;
-                console.log(track.duration);
-                index++;
-            });
-
-            currentSong = getRandomInt(0, index);
-
-            playCurrentSong();
-
-            function playCurrentSong() {
-                console.log("got into playCurrentSong function");
-                //Stream playlist, looping when end of playlist is reached
-                SC.stream('/tracks/' + song.id[currentSong]).then(function (player) {
-                    scPlayer = player;
-                    $scope.scIsPlaying = false;
-                    $scope.$digest();
-                    // scPlayer.play();
+        function streamTrack(autoPlay) {
+            SC.stream('/tracks/' + scTracks[scTrackIndex].id).then(function (player) {
+                scPlayer = player;
+                $scope.isPlaying = autoPlay;
+                if (autoPlay === true) {
+                    scPlayer.play();
+                }
+                $scope.trackTitle = scTracks[scTrackIndex].title;
+                $scope.trackArtist = scTracks[scTrackIndex].user.username;
+                $scope.$digest();
+                scPlayer.on('state-change', function (state) {
+                    if (state === 'ended') {
+                        if (scTrackIndex < scTracks.length) {
+                            scTrackIndex++;
+                        } else {
+                            scTrackIndex = 0;
+                        }
+                        streamTrack(true);
+                    }
                 });
-                console.log("duration " + song.duration[currentSong]);
-                setTimeout(queueNextSong, song.duration[currentSong]);
+            });
+        }
+
+        function shuffleArray(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
             }
+            return array;
+        }
 
-            function queueNextSong() {
-                console.log("got into queueNextSong function");
-
-                if (currentSong < song.id.length) {
-                    console.log(currentSong);
-                    //next index for next song id
-                    currentSong++;
+        $scope.scPrevious = function () {
+            if (scPlayer.currentTime() < 5000) {
+                if (scTrackIndex > 0) {
+                    scTrackIndex--;
                 } else {
-                    currentSong = 0;
-                    console.log(currentSong)
-                }
-
-                if (scPlayer.isPlaying() === true) {
-                    playCurrentSong();
+                    scTrackIndex = scTracks.length - 1;
                 }
             }
-        });
-    }
+            streamTrack($scope.isPlaying);
+        };
 
-    function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+        $scope.scPlay = function () {
+            scPlayer.play();
+            $scope.isPlaying = true;
+        };
+
+        $scope.scPause = function () {
+            scPlayer.pause();
+            $scope.isPlaying = false;
+        };
+
+        $scope.scNext = function () {
+            if (scTrackIndex < scTracks.length - 1) {
+                scTrackIndex++;
+            } else {
+                scTrackIndex = 0;
+            }
+            streamTrack($scope.isPlaying);
+        };
     }
 
 

@@ -1,8 +1,12 @@
 body {
 	font-family: 'Open Sans', sans-serif;
 }
-
-body>div {
+.container {
 	margin-top: 25vh;
 }
+.fa {
+	cursor: pointer;
+}
+
+
 

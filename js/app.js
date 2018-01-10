@@ -27,8 +27,10 @@ app.controller('controller', function ($scope) {
     $scope.scPlayPause = function() {
         if (scPlayer.isPlaying() === true) {
             scPlayer.pause();
+            $scope.scIsPlaying = false;
         } else {
             scPlayer.play();
+            $scope.scIsPlaying = true;
         }
     }
 
@@ -53,7 +55,9 @@ app.controller('controller', function ($scope) {
                 //Stream playlist, looping when end of playlist is reached
                 SC.stream('/tracks/' + song.id[currentSong]).then(function (player) {
                     scPlayer = player;
-                    scPlayer.play();
+                    $scope.scIsPlaying = false;
+                    $scope.$digest();
+                    // scPlayer.play();
                 });
                 console.log("duration " + song.duration[currentSong]);
                 setTimeout(queueNextSong, song.duration[currentSong]);
@@ -66,12 +70,14 @@ app.controller('controller', function ($scope) {
                     console.log(currentSong);
                     //next index for next song id
                     currentSong++;
-                }
-                else {
+                } else {
                     currentSong = 0;
                     console.log(currentSong)
                 }
-                playCurrentSong();
+
+                if (scPlayer.isPlaying() === true) {
+                    playCurrentSong();
+                }
             }
         });
     }

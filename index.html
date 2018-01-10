@@ -11,6 +11,7 @@
 	<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
 	<link rel="stylesheet" href="css/main.css" />
@@ -32,9 +33,14 @@
 		<div class="row text-center">
 			<div class="col">This site is owned and operated by Jacob and Josh Conger.</div>
 		</div>
-		<div class="row">
+		<br /><br />
+		<div class="row text-center">
 			<!-- <iframe width="400" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/418174355&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_teaser=false"> -->
 			<!-- </iframe> -->
+			<div class="col">
+				<span class="fa fa-play" ng-show="scIsPlaying === false"></span>
+				<span class="fa fa-pause" ng-show="scIsPlaying === true"></span>
+			</div>
 		</div>
 	</div>
 

@@ -10,6 +10,7 @@ app.controller('controller', function ($scope) {
         id: [],
         duration: []
     };
+    var scPlayer = {};
 
     init();
     function init() {
@@ -23,6 +24,13 @@ app.controller('controller', function ($scope) {
         });
     }
 
+    $scope.scPlayPause = function() {
+        if (scPlayer.isPlaying() === true) {
+            scPlayer.pause();
+        } else {
+            scPlayer.play();
+        }
+    }
 
     function scStream() {
         SC.get('/playlists/418174355').then(function (playlist) {
@@ -44,7 +52,8 @@ app.controller('controller', function ($scope) {
                 console.log("got into playCurrentSong function");
                 //Stream playlist, looping when end of playlist is reached
                 SC.stream('/tracks/' + song.id[currentSong]).then(function (player) {
-                    player.play();
+                    scPlayer = player;
+                    scPlayer.play();
                 });
                 console.log("duration " + song.duration[currentSong]);
                 setTimeout(queueNextSong, song.duration[currentSong]);
@@ -66,7 +75,6 @@ app.controller('controller', function ($scope) {
             }
         });
     }
-
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;

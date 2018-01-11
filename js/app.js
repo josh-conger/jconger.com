@@ -9,7 +9,7 @@ app.controller('controller', function ($scope) {
 
     function soundCloudStreamerInit() {
         var scClientId = 'c2Hm1wGeqsWTHQ07QmQqFJqGsw2j1nB9';
-        var scPlaylistId = '418174355';
+        var scPlaylistId = '419941610';
         var scTracks = [];
         var scTrackIndex = 0;
         var scTrackIndexesPlayed = [];
@@ -17,6 +17,10 @@ app.controller('controller', function ($scope) {
         var scPlayer = {};
 
         SC.initialize({ client_id: scClientId });
+
+        // SC.resolve('https://soundcloud.com/jcon1103/sets/edm').then(function (data) {
+        //     console.log(data.id);
+        // });
 
         SC.get('/playlists/' + scPlaylistId).then(function (playlist) {
             scTracks = shuffleArray(playlist.tracks);

@@ -24,7 +24,6 @@ app.controller('controller', function ($scope) {
         });
 
         function streamTrack(autoPlay) {
-            $scope.scIsLoading = true;
             SC.stream('/tracks/' + scTracks[scTrackIndex].id).then(function (player) {
                 scPlayer = player;
                 $scope.scIsPlaying = autoPlay;
@@ -34,19 +33,16 @@ app.controller('controller', function ($scope) {
                 $scope.trackTitle = scTracks[scTrackIndex].title;
                 $scope.trackArtist = scTracks[scTrackIndex].user.username;
                 $scope.$digest();
-                scPlayer.on('play', function () {
-                    $scope.scIsPlaying = true;
-                });
                 scPlayer.on('pause', function () {
                     $scope.scIsPlaying = false;
                 });
                 scPlayer.on('play-start', function () {
-                    console.log('play-start');
+                    $scope.scIsPlaying = true;
                     $scope.scIsLoading = false;
                     $scope.$digest();
                 });
                 scPlayer.on('play-resume', function () {
-                    console.log('play-resume');
+                    $scope.scIsPlaying = true;
                 });
                 scPlayer.on('finish', function () {
                     if (scTrackIndex < scTracks.length) {
@@ -54,6 +50,7 @@ app.controller('controller', function ($scope) {
                     } else {
                         scTrackIndex = 0;
                     }
+                    $scope.scIsLoading = true;
                     streamTrack(true);
                 });
             });
@@ -80,8 +77,12 @@ app.controller('controller', function ($scope) {
                 } else {
                     scTrackIndex = scTracks.length - 1;
                 }
+                $scope.scIsLoading = true;
+                streamTrack($scope.scIsPlaying);
+            } else {
+                scPlayer.seek(0);
             }
-            streamTrack($scope.scIsPlaying);
+            
         };
 
         $scope.scPlayClick = function () {
@@ -98,9 +99,10 @@ app.controller('controller', function ($scope) {
             } else {
                 scTrackIndex = 0;
             }
+            $scope.scIsLoading = true;
             streamTrack($scope.scIsPlaying);
         };
-        
+
     }
 
 

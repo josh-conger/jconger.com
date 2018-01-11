@@ -35,22 +35,23 @@
 		</div>
 		<div class="row sc-row">
 			<div class="col text-center">
-				<button type="button" class="btn" ng-show="scIsPlaying != null" ng-disabled="scIsLoading === true" ng-click="scPreviousClick()">
+				<button type="button" class="btn" ng-show="scIsPlaying === true" ng-disabled="scIsLoading === true" ng-click="scPreviousClick()">
 					<i class="fa fa-backward"></i>
 				</button>
-				<button type="button" class="btn" ng-show="scIsPlaying === false" ng-click="scPlayClick()">
+				<button type="button" class="btn" ng-show="scIsPlaying === false" ng-disabled="scIsLoading === true" ng-click="scPlayClick()">
 					<i class="fa fa-play"></i>
 				</button>
-				<button type="button" class="btn" ng-show="scIsPlaying === true" ng-click="scPauseClick()">
+				<button type="button" class="btn" ng-show="scIsPlaying === true" ng-disabled="scIsLoading === true" ng-click="scPauseClick()">
 					<i class="fa fa-pause"></i>
 				</button>
-				<button type="button" class="btn" ng-show="scIsPlaying != null" ng-disabled="scIsLoading === true" ng-click="scNextClick()">
+				<button type="button" class="btn" ng-show="scIsPlaying === true" ng-disabled="scIsLoading === true" ng-click="scNextClick()">
 					<i class="fa fa-forward"></i>
 				</button>
 				<div ng-show="scIsLoading === false">
 					<div class="track-title">{{trackTitle}}</div>
 					<div class="track-artist">{{trackArtist}}</div>
 				</div>
+				<div class="track-loading" ng-show="scIsLoading === true">Loading</div>
 			</div>
 		</div>
 	</div>

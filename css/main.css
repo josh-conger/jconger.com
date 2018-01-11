@@ -16,7 +16,7 @@ body {
 }
 .btn.disabled, .btn:disabled {
 	cursor: default;
-	opacity: 0.3;
+	opacity: 0.4;
 }
 .version {
 	position: absolute;
@@ -50,6 +50,11 @@ body {
 }
 .sc-row .track-artist {
 	margin-top: 5px;
+}
+.sc-row .track-loading {
+	margin-top: 10px;
+	font-weight: bold;
+	color: rgba(0, 0, 0, 0.4);
 }
 
 

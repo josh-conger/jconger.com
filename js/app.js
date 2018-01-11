@@ -24,33 +24,48 @@ app.controller('controller', function ($scope) {
         });
 
         function streamTrack(autoPlay) {
+            $scope.scIsLoading = true;
             SC.stream('/tracks/' + scTracks[scTrackIndex].id).then(function (player) {
                 scPlayer = player;
-                $scope.isPlaying = autoPlay;
+                $scope.scIsPlaying = autoPlay;
                 if (autoPlay === true) {
                     scPlayer.play();
                 }
                 $scope.trackTitle = scTracks[scTrackIndex].title;
                 $scope.trackArtist = scTracks[scTrackIndex].user.username;
                 $scope.$digest();
-                scPlayer.on('state-change', function (state) {
-                    if (state === 'ended') {
-                        if (scTrackIndex < scTracks.length) {
-                            scTrackIndex++;
-                        } else {
-                            scTrackIndex = 0;
-                        }
-                        streamTrack(true);
+                scPlayer.on('play', function () {
+                    $scope.scIsPlaying = true;
+                });
+                scPlayer.on('pause', function () {
+                    $scope.scIsPlaying = false;
+                });
+                scPlayer.on('play-start', function () {
+                    console.log('play-start');
+                    $scope.scIsLoading = false;
+                    $scope.$digest();
+                });
+                scPlayer.on('play-resume', function () {
+                    console.log('play-resume');
+                });
+                scPlayer.on('finish', function () {
+                    if (scTrackIndex < scTracks.length) {
+                        scTrackIndex++;
+                    } else {
+                        scTrackIndex = 0;
                     }
+                    streamTrack(true);
                 });
             });
         }
 
         function shuffleArray(array) {
-            var currentIndex = array.length, temporaryValue, randomIndex;
-            while (0 !== currentIndex) {
+            var currentIndex = array.length
+            var temporaryValue;
+            var randomIndex;
+            while (currentIndex !== 0) {
                 randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
+                currentIndex--;
                 temporaryValue = array[currentIndex];
                 array[currentIndex] = array[randomIndex];
                 array[randomIndex] = temporaryValue;
@@ -58,7 +73,7 @@ app.controller('controller', function ($scope) {
             return array;
         }
 
-        $scope.scPrevious = function () {
+        $scope.scPreviousClick = function () {
             if (scPlayer.currentTime() < 5000) {
                 if (scTrackIndex > 0) {
                     scTrackIndex--;
@@ -66,27 +81,26 @@ app.controller('controller', function ($scope) {
                     scTrackIndex = scTracks.length - 1;
                 }
             }
-            streamTrack($scope.isPlaying);
+            streamTrack($scope.scIsPlaying);
         };
 
-        $scope.scPlay = function () {
+        $scope.scPlayClick = function () {
             scPlayer.play();
-            $scope.isPlaying = true;
         };
 
-        $scope.scPause = function () {
+        $scope.scPauseClick = function () {
             scPlayer.pause();
-            $scope.isPlaying = false;
         };
 
-        $scope.scNext = function () {
+        $scope.scNextClick = function () {
             if (scTrackIndex < scTracks.length - 1) {
                 scTrackIndex++;
             } else {
                 scTrackIndex = 0;
             }
-            streamTrack($scope.isPlaying);
+            streamTrack($scope.scIsPlaying);
         };
+        
     }
 
 

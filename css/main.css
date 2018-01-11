@@ -5,7 +5,18 @@ html {
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
+	color: #333333;
 	margin-bottom: 50px;
+}
+.btn {
+	cursor: pointer;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 0 0px rgba(0,123,255,.25) !important;
+	transition: all 0.0s ease-in-out;
+}
+.btn.disabled, .btn:disabled {
+	cursor: default;
+	opacity: 0.3;
 }
 .version {
 	position: absolute;
@@ -21,21 +32,23 @@ body {
 .sc-row {
 	margin-top: 15vh;
 }
-.fa {
-	cursor: pointer;
-	font-size: 26px;
-	padding: 15px 30px;
-	vertical-align: middle;
+.sc-row .btn {
+	margin: 5px 20px;
+	padding: 10px 10px;
 }
-.fa-play, 
-.fa-pause {
+.sc-row .fa {
+	color: #333333;
+	font-size: 26px;
+}
+.sc-row .fa-play, 
+.sc-row .fa-pause {
 	font-size: 32px;
 }
-.track-title {
+.sc-row .track-title {
 	margin-top: 10px;
 	font-weight: bold;
 }
-.track-artist {
+.sc-row .track-artist {
 	margin-top: 5px;
 }
 

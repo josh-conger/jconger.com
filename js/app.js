@@ -43,6 +43,7 @@ app.controller('controller', function ($scope) {
                 });
                 scPlayer.on('play-resume', function () {
                     $scope.scIsPlaying = true;
+                    $scope.scIsLoading = false;
                 });
                 scPlayer.on('finish', function () {
                     if (scTrackIndex < scTracks.length) {
@@ -82,10 +83,11 @@ app.controller('controller', function ($scope) {
             } else {
                 scPlayer.seek(0);
             }
-            
+
         };
 
         $scope.scPlayClick = function () {
+            $scope.scIsLoading = true;
             scPlayer.play();
         };
 

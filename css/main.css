@@ -46,14 +46,12 @@ body {
 }
 .sc-row .track-title {
 	margin-top: 10px;
-	font-weight: bold;
 }
 .sc-row .track-artist {
 	margin-top: 5px;
 }
 .sc-row .track-loading {
 	margin-top: 10px;
-	font-weight: bold;
 	color: rgba(0, 0, 0, 0.4);
 }
 

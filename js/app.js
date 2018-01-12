@@ -1,6 +1,29 @@
 var app = angular.module('app', []);
 
-app.controller('controller', function ($scope) {
+app.config(function () {
+
+});
+
+app.run(function () {
+
+    init();
+    function init() {
+        enableNoSleep();
+    }
+
+    function enableNoSleep() {
+        var noSleep = new NoSleep();
+        noSleep.enable();
+    }
+
+    $(document).ready(function () {
+        $('.hide-all').hide();
+    });
+
+});
+
+app.controller('controller', function ($scope, $filter, $timeout) {
+
 
     init();
     function init() {
@@ -36,6 +59,7 @@ app.controller('controller', function ($scope) {
                 }
                 $scope.trackTitle = scTracks[scTrackIndex].title;
                 $scope.trackArtist = scTracks[scTrackIndex].user.username;
+                $scope.trackArtworkUrl = scTracks[scTrackIndex].artwork_url;
                 $scope.$digest();
                 scPlayer.on('pause', function () {
                     $scope.scIsPlaying = false;
@@ -58,6 +82,14 @@ app.controller('controller', function ($scope) {
                     $scope.scIsLoading = true;
                     streamTrack(true);
                 });
+                tickTrackTime();
+                function tickTrackTime() {
+                    var timeAsc = scPlayer.currentTime();
+                    var timeDesc = scPlayer.getDuration() - timeAsc;
+                    $scope.trackTimeAsc = $filter('date')(timeAsc, 'mm:ss');
+                    $scope.trackTimeDesc = $filter('date')(timeDesc, 'mm:ss');
+                    $timeout(tickTrackTime, 1000);
+                }
             });
         }
 
@@ -110,6 +142,5 @@ app.controller('controller', function ($scope) {
         };
 
     }
-
 
 });

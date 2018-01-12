@@ -5,8 +5,64 @@ html {
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
-	color: #333333;
 	margin-bottom: 50px;
+	color: #333333;
+}
+main {
+	padding-top: 50px;
+}
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	/* background-color: #F5F5F5; */
+}
+@keyframes spin {
+	0%	 { transform: rotate(0deg); }
+	100% { transform: rotate(359deg); }
+}
+.hide-all,
+.loading-spinner {
+	z-index: 1028;
+    position: fixed;
+    padding: 0px;
+    margin: 0px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.hide-all {
+    background-color: #FFFFFF;
+}
+.loading-spinner {
+	display: none;
+	background-color: rgba(255,255,255,0.8);
+}
+.loading-spinner .spinner,
+.loading-spinner .text {
+	position: fixed;
+	left: 0; 
+	right: 0;
+	margin: auto;
+}
+.loading-spinner .spinner {
+	top: 30vh;
+	width: 70px;
+	height: 70px;
+	border: 5px solid #333333;
+	border-top: 5px solid transparent;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+.loading-spinner .text {
+	top: calc(30vh + 90px);
+	width: 100%;
+	text-align: center;
+	font-weight: 700;
+	font-size: 16px;
 }
 .btn {
 	cursor: pointer;
@@ -19,41 +75,43 @@ body {
 	opacity: 0.4;
 }
 .version {
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 5px 10px;
 	color: rgba(0, 0, 0, 0.2);
 }
-.text-row {
-	margin-top: 20vh;
-	font-size: 16px;
+.sc-player {
+	margin-top: 25vh;
 }
-.sc-row {
-	margin-top: 15vh;
+.sc-player .track-artwork {
+	height: 100px;
+	margin-bottom: 10px;
 }
-.sc-row .btn {
+.sc-player .track-artwork img {
+	max-width: 100px;
+	max-height: 100px;
+}
+.sc-player .btn {
 	margin: 5px 20px;
 	padding: 10px 10px;
 }
-.sc-row .fa {
-	color: #333333;
+.sc-player .fa {
 	font-size: 26px;
 }
-.sc-row .fa-play, 
-.sc-row .fa-pause {
+.sc-player .fa-play, 
+.sc-player .fa-pause {
 	font-size: 32px;
 }
-.sc-row .track-title {
+.sc-player .track-title {
 	margin-top: 10px;
 }
-.sc-row .track-artist {
+.sc-player .track-artist {
 	margin-top: 5px;
+	color: rgba(0, 0, 0, 0.5);
 }
-.sc-row .track-loading {
+.sc-player .track-time {
+	margin-top: 5px;
+	font-size: 12px;
+}
+.sc-player .track-loading {
 	margin-top: 10px;
 	color: rgba(0, 0, 0, 0.4);
 }
-
-
 
